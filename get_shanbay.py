@@ -7,7 +7,7 @@ from github import Github
 GET_UP_ISSUE_NUMBER = 1
 
 SHANBAY_API = "https://apiv3.shanbay.com/uc/checkin/logs?user_id={shanbay_username}&ipp=10&page=1"
-SHANBAY_RECORD_MESSAGE = "打卡日期 {learn_date}\r\n学习 {used_minutes} 分钟，背单词 {num} 个"
+SHANBAY_RECORD_MESSAGE = "打卡日期 {learn_date}\r\n学习 {used_minutes} 分钟 {used_seconds} 秒，背单词 {num} 个"
 DEFAULT_RECORD = "获取扇贝记录出错啦，检查检查代码吧"
 
 TIMEZONE = "Asia/Shanghai"
@@ -41,11 +41,12 @@ def get_latest_record(shanbay_username):
                 task = latest_record.get("tasks")[0]
                 # get reciting words number
                 num = task.get("num")
-                userd_time = task.get("used_time")
-                userd_minutes = divmod(userd_time, 60)
+                used_time = task.get("used_time")
+                used_minutes = divmod(used_time, 60)[0]
+                used_seconds = divmod(used_minutes, 60)[1]
 
                 return SHANBAY_RECORD_MESSAGE.format(
-                    learn_date=learn_date, num=num, used_minutes=userd_minutes
+                    learn_date=learn_date, num=num, used_minutes=used_minutes, used_seconds=used_seconds
                 )
     except:
         print("get SHANBAY_API wrong")
