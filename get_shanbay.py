@@ -61,6 +61,7 @@ def main(github_token, repo_name, shanbay_username, tele_token, tele_chat_id):
     body = get_latest_record(shanbay_username)
 
     if is_today:
+        print('今天已经打过卡啦')
         comment = list(issue.get_comments())[-1]
         comment.edit(body)
     else:
