@@ -25,7 +25,7 @@ def get_today_shanbay_status(issue):
     latest_day = pendulum.instance(latest_comment.created_at).in_timezone(
         "Asia/Shanghai"
     )
-    is_today = (latest_day == now.day) and (latest_day.month == now.month)
+    is_today = (latest_day.day == now.day) and (latest_day.month == now.month)
     return is_today
 
 
